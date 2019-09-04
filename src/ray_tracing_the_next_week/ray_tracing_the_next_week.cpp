@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include "sphere.h"
+#include "moving_sphere.h"
 #include "hitable_list.h"
 
 #include "float.h"
@@ -8,7 +10,6 @@
 #include "lambertian.h"
 #include "metal.h"
 #include "dielectric.h"
-
 
 
 vec3 color(const ray& r, hitable *world, int depth) {
@@ -32,29 +33,24 @@ vec3 color(const ray& r, hitable *world, int depth) {
 }
 
 hitable* random_scene() {
-  int n = 500;
+  int n = 50000;
   hitable** list = new hitable*[n + 1];
-  list[0] = new sphere(vec3(0, -1000, 0), 1000, new lambertian(vec3(0.5f, 0.5f, 0.5f)));
+  list[0] = new sphere(vec3(0.0f, -1000.0f, 0.0f), 1000.0f, new lambertian(vec3(0.5f, 0.5f, 0.5f)));
   int i = 1;
-  for(int a = -11; a < 11; a++) {
-    for(int b = -11; b < 11; b++) {
+  for(int a = -10; a < 10; a++) {
+    for(int b = -10; b < 10; b++) {
       
-      float choose_mat = (rand() / (RAND_MAX + 1.0f));
-      vec3 center(a + 0.9f * (rand() / (RAND_MAX + 1.0f)), 0.2f, b + 0.9f * (rand() / (RAND_MAX + 1.0f)));
-      if((center - vec3(4, 0.2f, 0)).length() > 0.9f) {
+      float choose_mat = drand48();
+      vec3 center(a + 0.9f * drand48(), 0.2f, b + 0.9f * drand48());
+      if((center - vec3(4.0f, 0.2f, 0.0f)).length() > 0.9f) {
 
         if(choose_mat < 0.8f) { // diffuse
-          list[i++] = new sphere(center, 0.2f, new lambertian(vec3(
-            (rand() / (RAND_MAX + 1.0f)) * (rand() / (RAND_MAX + 1.0f)), 
-            (rand() / (RAND_MAX + 1.0f)) * (rand() / (RAND_MAX + 1.0f)), 
-            (rand() / (RAND_MAX + 1.0f)) * (rand() / (RAND_MAX + 1.0f)))));
+          list[i++] = new moving_sphere(center, center + vec3(0.0f, 0.5f * drand48(), 0.0f), 0.0f, 1.0f, 0.2f,
+            new lambertian(vec3(drand48() * drand48(), drand48() * drand48(), drand48() * drand48())));
         }
         else if(choose_mat < 0.95f) { // metal
           list[i++] = new sphere(center, 0.2f,
-            new metal(vec3( 
-              0.5f * (1 + (rand() / (RAND_MAX + 1.0f))),
-              0.5f * (1 + (rand() / (RAND_MAX + 1.0f))),
-              0.5f * (1 + (rand() / (RAND_MAX + 1.0f)))), 0.5f * (rand() / (RAND_MAX + 1.0f))));
+            new metal(vec3(0.5f * (1.0f + drand48()), 0.5f * (1.0f + drand48()), 0.5f * (1.0f + drand48())), 0.5f * drand48()));
               
         }
         else { // glass
@@ -75,7 +71,7 @@ hitable* random_scene() {
 int main () {
   int nx = 1200;
   int ny = 800;
-  int ns = 10;
+  int ns = 100;
   std::cout << "P3\n" << nx << " " << ny << "\n255\n";
   
   hitable* list[5];
@@ -88,12 +84,12 @@ int main () {
   hitable *world = new hitable_list(list, 5);
   world = random_scene();
 
-  vec3 lookfrom(13, 2, 3);
-  vec3 lookat(0, 0, 0);
+  vec3 lookfrom(13.0f, 2.0f, 3.0f);
+  vec3 lookat(0.0f, 0.0f, 0.0f);
   float dist_to_focus = 10.0f; //(lookfrom - lookat).length();
-  float aperture = 0.1f;
+  float aperture = 0.0f;
 
-  camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, float(nx)/float(ny), aperture, dist_to_focus);
+  camera cam(lookfrom, lookat, vec3(0.0f, 1.0f, 0.0f), 20.0f, float(nx)/float(ny), aperture, dist_to_focus, 0.0f, 1.0f);
 
   for (int j = ny - 1; j >= 0; j--) {
     for (int i = 0; i < nx; i++) {
@@ -101,8 +97,8 @@ int main () {
       vec3 col(0.0f, 0.0f, 0.0f);
       for(int s = 0; s < ns; s++) {
 
-        float u = float(i + (rand() / (RAND_MAX + 1.0f))) / float(nx);
-        float v = float(j + (rand() / (RAND_MAX + 1.0f))) / float(ny);
+        float u = float(i + drand48()) / float(nx);
+        float v = float(j + drand48()) / float(ny);
         ray r = cam.get_ray(u, v);
         col += color(r, world, 0);
       }
@@ -116,6 +112,7 @@ int main () {
       std::cout << ir << " " << ig << " " << ib << "\n";
     }
   }
+
 }
 
 

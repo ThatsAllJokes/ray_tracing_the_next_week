@@ -37,11 +37,11 @@ public:
       reflect_prob = 1.0f;
     }
 
-    if((rand() / (RAND_MAX + 1.0f)) < reflect_prob) {
-      scattered = ray(rec.p, reflected);
+    if(drand48() < reflect_prob) {
+      scattered = ray(rec.p, reflected, r_in.time());
     }
     else {
-      scattered = ray(rec.p, refracted);
+      scattered = ray(rec.p, refracted, r_in.time());
     }
 
     return true;

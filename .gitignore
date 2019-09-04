@@ -35,6 +35,6 @@
 src/.vs
 src/Debug
 src/x64
-src/ray_tracing_in_a_weekend/Debug
-src/ray_tracing_in_a_weekend/x64
-src/ray_tracing_in_a_weekend/*.user
+src/ray_tracing_the_next_week/Debug
+src/ray_tracing_the_next_week/x64
+src/ray_tracing_the_next_week/*.user

@@ -3,6 +3,8 @@
 
 #include "ray.h"
 
+inline float drand48() { return ((float)(rand() / (RAND_MAX + 1.0f))); }
+
 class material;
 
 struct hit_record {
