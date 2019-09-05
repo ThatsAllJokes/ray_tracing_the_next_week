@@ -8,7 +8,7 @@ const float M_PI = 3.14159265358979323846f;
 vec3 random_in_unit_disk() {
   vec3 p;
   do {
-    p = 2.0f * vec3(drand48(), drand48(), 0) - vec3(1, 1, 0);
+    p = 2.0f * vec3(random_double(), random_double(), 0) - vec3(1, 1, 0);
   } while(dot(p, p) >= 1.0f);
   return p;
 }
@@ -16,7 +16,8 @@ vec3 random_in_unit_disk() {
 class camera {
  public:
 
-  camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist, float t0, float t1) { // vfov is top to bottom in degrees
+  camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist,
+         float t0, float t1) { // vfov is top to bottom in degrees
     time0 = t0;
     time1 = t1;
     lens_radius = aperture / 2.0f;
@@ -35,7 +36,7 @@ class camera {
   ray get_ray(float s, float t) {
     vec3 rd = lens_radius * random_in_unit_disk();
     vec3 offset = u * rd.x() + v * rd.y();
-    float time = time0 + drand48() * (time1 - time0);
+    float time = time0 + random_double() * (time1 - time0);
     return ray(origin + offset, lower_left_corner + s * horizontal + t * vertical - origin - offset, time);
   }
 

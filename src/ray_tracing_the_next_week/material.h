@@ -2,6 +2,7 @@
 #define _MATERIAL_H_ 1
 
 #include "ray.h"
+#include "random.h"
 #include "hitable.h"
 
 float schlick(float cosine, float ref_idx) {
@@ -30,7 +31,7 @@ inline vec3 reflect(const vec3& v, const vec3& n) {
 vec3 random_in_unit_sphere() {
   vec3 p;
   do {
-    p = 2.0f * vec3(drand48(), drand48(), drand48()) - vec3(1, 1, 1);
+    p = 2.0f * vec3(random_double(), random_double(), random_double()) - vec3(1, 1, 1);
   } while(p.squared_length() >= 1.0f);
   return p;
 }

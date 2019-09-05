@@ -37,7 +37,7 @@ public:
       reflect_prob = 1.0f;
     }
 
-    if(drand48() < reflect_prob) {
+    if(random_double() < reflect_prob) {
       scattered = ray(rec.p, reflected, r_in.time());
     }
     else {
