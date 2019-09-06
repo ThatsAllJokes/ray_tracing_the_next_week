@@ -43,6 +43,14 @@ hitable* two_spheres() {
   return new hitable_list(list, 2);
 }
 
+hitable* two_perlin_spheres() {
+  texture* pertext = new noise_texture(2.0f);
+  hitable** list = new hitable*[2];
+  list[0] = new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext));
+  list[1] = new sphere(vec3(0, 2, 0), 2, new lambertian(pertext));
+  return new hitable_list(list, 2);
+}
+
 hitable* random_scene() {
   int n = 50000;
   hitable** list = new hitable*[n + 1];
@@ -84,7 +92,7 @@ hitable* random_scene() {
 int main () {
   int nx = 1200;
   int ny = 800;
-  int ns = 150;
+  int ns = 140;
   std::cout << "P3\n" << nx << " " << ny << "\n255\n";
   
   /*hitable* list[5];
@@ -95,7 +103,7 @@ int main () {
   list[3] = new sphere(vec3(-1, 0, -1), 0.5f, new dielectric(1.5f));
   list[4] = new sphere(vec3(-1, 0, -1), -0.45f, new dielectric(1.5f));*/
   //hitable *world = new hitable_list(list, 5);
-  hitable *world = two_spheres();
+  hitable *world = two_perlin_spheres();
 
   vec3 lookfrom(13.0f, 2.0f, 3.0f);
   vec3 lookat(0.0f, 0.0f, 0.0f);
