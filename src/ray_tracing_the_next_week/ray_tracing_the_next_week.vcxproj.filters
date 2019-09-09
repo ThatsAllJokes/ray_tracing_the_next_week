@@ -7,22 +7,13 @@
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dielectric.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="hitable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hitable_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lambertian.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="metal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vec3.h">

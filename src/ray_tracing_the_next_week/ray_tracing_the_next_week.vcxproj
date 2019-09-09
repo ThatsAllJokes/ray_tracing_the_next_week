@@ -164,13 +164,10 @@
     <ClInclude Include="aabb.h" />
     <ClInclude Include="bvh.h" />
     <ClInclude Include="camera.h" />
-    <ClInclude Include="dielectric.h" />
     <ClInclude Include="hitable.h" />
     <ClInclude Include="hitable_list.h" />
     <ClInclude Include="image_texture.h" />
-    <ClInclude Include="lambertian.h" />
     <ClInclude Include="material.h" />
-    <ClInclude Include="metal.h" />
     <ClInclude Include="moving_sphere.h" />
     <ClInclude Include="perlin.h" />
     <ClInclude Include="random.h" />

@@ -8,9 +8,7 @@
 #include "random.h"
 #include "camera.h"
 
-#include "lambertian.h"
-#include "metal.h"
-#include "dielectric.h"
+#include "material.h"
 
 #include "image_texture.h"
 
