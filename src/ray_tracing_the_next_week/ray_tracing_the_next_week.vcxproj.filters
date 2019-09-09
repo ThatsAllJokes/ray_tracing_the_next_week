@@ -49,6 +49,9 @@
     <ClInclude Include="perlin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="image_texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

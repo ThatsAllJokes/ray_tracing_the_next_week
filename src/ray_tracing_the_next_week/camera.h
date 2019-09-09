@@ -3,8 +3,6 @@
 
 #include "ray.h"
 
-const float M_PI = 3.14159265358979323846f;
-
 vec3 random_in_unit_disk() {
   vec3 p;
   do {

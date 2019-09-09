@@ -3,6 +3,8 @@
 
 #include "vec3.h"
 
+const float M_PI = 3.14159265358979323846f;
+
 class ray {
  public:
   

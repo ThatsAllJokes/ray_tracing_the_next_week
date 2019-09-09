@@ -12,6 +12,10 @@
 #include "metal.h"
 #include "dielectric.h"
 
+#include "image_texture.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 vec3 color(const ray& r, hitable *world, int depth) {
   hit_record rec;
@@ -45,6 +49,7 @@ hitable* two_spheres() {
 
 hitable* two_perlin_spheres() {
   texture* pertext = new noise_texture(2.0f);
+
   hitable** list = new hitable*[2];
   list[0] = new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext));
   list[1] = new sphere(vec3(0, 2, 0), 2, new lambertian(pertext));
@@ -90,9 +95,9 @@ hitable* random_scene() {
 
 
 int main () {
-  int nx = 1200;
-  int ny = 800;
-  int ns = 140;
+  int nx = 800;
+  int ny = 600;
+  int ns = 40;
   std::cout << "P3\n" << nx << " " << ny << "\n255\n";
   
   /*hitable* list[5];
