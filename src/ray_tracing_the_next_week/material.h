@@ -1,10 +1,10 @@
 #ifndef _MATERIAL_H_
 #define _MATERIAL_H_ 1
 
-#include "ray.h"
-#include "random.h"
 #include "hitable.h"
+#include "ray.h"
 #include "texture.h"
+#include "random.h"
 
 float schlick(float cosine, float ref_idx) {
   float r0 = (1 - ref_idx) / (1 + ref_idx);
@@ -41,6 +41,18 @@ class material {
  public:
 
   virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered) const = 0;
+  virtual vec3 emitted(float u, float v, const vec3& p) const { return vec3(0, 0, 0); }
+};
+
+class diffuse_light : public material {
+public:
+
+  diffuse_light(texture* a) : emit(a) { }
+
+  virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered) const { return false; }
+  virtual vec3 emitted(float u, float v, const vec3& p) const { return emit->value(u, v, p); }
+
+  texture* emit;
 };
 
 class lambertian : public material {
