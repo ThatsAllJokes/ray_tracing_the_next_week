@@ -43,7 +43,12 @@
     <ClInclude Include="image_texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="aarect.h" />
+    <ClInclude Include="box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aarect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
