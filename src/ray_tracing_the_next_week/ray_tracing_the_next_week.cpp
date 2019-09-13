@@ -14,6 +14,7 @@
 
 #include "aarect.h"
 #include "box.h"
+#include "constant_medium.h"
 
 //#define STB_IMAGE_IMPLEMENTATION
 //#include "stb_image.h"
@@ -86,6 +87,29 @@ hitable* cornell_box() {
   return new hitable_list(list, i);
 }
 
+hitable* cornell_smoke() {
+  hitable **list = new hitable*[8];
+  int i = 0;
+  material* red = new lambertian(new constant_texture(vec3(0.65f, 0.05f, 0.05f)));
+  material* white = new lambertian(new constant_texture(vec3(0.73f, 0.73f, 0.73f)));
+  material* green = new lambertian(new constant_texture(vec3(0.12f, 0.45f, 0.15f)));
+  material* light = new diffuse_light(new constant_texture(vec3(15, 15, 15)));
+  list[i++] = new flip_normals(new yz_rect(0, 555, 0, 555, 555, green));
+  list[i++] = new yz_rect(0, 555, 0, 555, 0, red);
+  list[i++] = new xz_rect(213, 343, 227, 332, 554, light);
+  list[i++] = new flip_normals(new xz_rect(0, 555, 0, 555, 555, white));
+  list[i++] = new xz_rect(0, 555, 0, 555, 0, white);
+  list[i++] = new flip_normals(new xy_rect(0, 555, 0, 555, 555, white));
+
+  hitable* b1 = new translate(new rotate_y(new box(vec3(0, 0, 0), vec3(165, 165, 165), white), -18), vec3(130, 0, 65));
+  hitable* b2 = new translate(new rotate_y(new box(vec3(0, 0, 0), vec3(165, 330, 165), white), 15), vec3(265, 0, 295));
+
+  list[i++] = new constant_medium(b1, 0.01, new constant_texture(vec3(1.0f, 1.0f, 1.0f)));
+  list[i++] = new constant_medium(b2, 0.01, new constant_texture(vec3(0.0f, 0.0f, 0.0f)));
+
+  return new hitable_list(list, i);
+}
+
 hitable* random_scene() {
   int n = 50000;
   hitable** list = new hitable*[n + 1];
@@ -125,9 +149,9 @@ hitable* random_scene() {
 
 
 int main () {
-  int nx = 800;
-  int ny = 800;
-  int ns = 100;
+  int nx = 600;
+  int ny = 600;
+  int ns = 120;
   std::cout << "P3\n" << nx << " " << ny << "\n255\n";
   
   /*hitable* list[5];
@@ -138,7 +162,7 @@ int main () {
   list[3] = new sphere(vec3(-1, 0, -1), 0.5f, new dielectric(1.5f));
   list[4] = new sphere(vec3(-1, 0, -1), -0.45f, new dielectric(1.5f));*/
   //hitable *world = new hitable_list(list, 5);
-  hitable *world = cornell_box();
+  hitable *world = cornell_smoke();
 
   vec3 lookfrom(278.0f, 278.0f, -800.0f);
   vec3 lookat(278.0f, 278.0f, 0.0f);
